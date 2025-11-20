@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - AGROAI Ocean Data Discovery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5a6fd8;
+            --secondary: #764ba2;
+            --accent: #4fd1c7;
+            --accent-dark: #38b2ac;
+            --text-light: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --card-border: rgba(255, 255, 255, 0.2);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Enhanced Ocean Background */
+        .ocean-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 12rem;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" fill="%23ffffff22"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" /></svg>');
+            background-size: 50% 100%;
+            animation: wave 15s linear infinite;
+        }
+
+        .wave:nth-child(2) {
+            animation: wave 12s linear infinite;
+            opacity: 0.5;
+            bottom: 2rem;
+        }
+
+        .wave:nth-child(3) {
+            animation: wave 18s linear infinite;
+            opacity: 0.3;
+            bottom: 4rem;
+        }
+
+        .bubbles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: rise 15s infinite ease-in;
+        }
+
+        .bubble:nth-child(1) {
+            width: 40px;
+            height: 40px;
+            left: 10%;
+            animation-duration: 16s;
+        }
+
+        .bubble:nth-child(2) {
+            width: 20px;
+            height: 20px;
+            left: 20%;
+            animation-duration: 12s;
+            animation-delay: 1s;
+        }
+
+        .bubble:nth-child(3) {
+            width: 50px;
+            height: 50px;
+            left: 35%;
+            animation-duration: 18s;
+            animation-delay: 2s;
+        }
+
+        .bubble:nth-child(4) {
+            width: 80px;
+            height: 80px;
+            left: 50%;
+            animation-duration: 22s;
+            animation-delay: 0s;
+        }
+
+        .bubble:nth-child(5) {
+            width: 35px;
+            height: 35px;
+            left: 55%;
+            animation-duration: 16s;
+            animation-delay: 1s;
+        }
+
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(-25%); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @keyframes rise {
+            0% {
+                bottom: -100px;
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(100px);
+            }
+            100% {
+                bottom: 1080px;
+                transform: translateX(-100px);
+            }
+        }
+
+        /* Enhanced Register Container */
+        .register-container {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 50px 40px;
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+            z-index: 1;
+        }
+
+        .register-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(79,209,199,0.1) 0%, transparent 70%);
+            animation: pulse 8s infinite ease-in-out;
+            z-index: -1;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .logo-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            display: inline-block;
+            animation: float 6s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(79, 209, 199, 0.5));
+        }
+
+        .logo h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            background: linear-gradient(to right, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo p {
+            opacity: 0.8;
+            font-size: 1rem;
+        }
+
+        /* Progress Steps */
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 1;
+        }
+
+        .progress-bar {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.5s ease;
+            z-index: 2;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 3;
+        }
+
+        .step-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .step.active .step-circle {
+            background: var(--accent);
+            box-shadow: 0 0 0 4px rgba(79, 209, 199, 0.3);
+        }
+
+        .step.completed .step-circle {
+            background: var(--accent);
+        }
+
+        .step.completed .step-circle::after {
+            content: '✓';
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            text-align: center;
+        }
+
+        .step.active .step-label {
+            opacity: 1;
+            font-weight: 500;
+        }
+
+        /* Form Styles */
+        .form-step {
+            display: none;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            animation: fadeInUp 0.8s ease-out;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.6);
+            transition: color 0.3s ease;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(79, 209, 199, 0.2);
+        }
+
+        .form-group input:focus + .input-icon {
+            color: var(--accent);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: var(--accent);
+        }
+
+        .password-strength {
+            margin-top: 8px;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .password-strength.weak .password-strength-bar {
+            background: #ef4444;
+            width: 33%;
+        }
+
+        .password-strength.medium .password-strength-bar {
+            background: #f59e0b;
+            width: 66%;
+        }
+
+        .password-strength.strong .password-strength-bar {
+            background: #10b981;
+            width: 100%;
+        }
+
+        .password-requirements {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .requirement {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 3px;
+        }
+
+        .requirement.met {
+            color: var(--accent);
+        }
+
+        .requirement.met i {
+            color: var(--accent);
+        }
+
+        /* Enhanced Button */
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(45deg, var(--accent), var(--accent-dark));
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .btn-loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .btn-loading .btn-spinner {
+            display: inline-block;
+        }
+
+        .btn-text {
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-loading .btn-text {
+            opacity: 0.7;
+        }
+
+        .btn-spinner {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Form Navigation */
+        .form-navigation {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .form-navigation .btn {
+            flex: 1;
+        }
+
+        /* Links Section */
+        .links {
+            text-align: center;
+            margin-top: 25px;
+            animation: fadeInUp 0.8s ease-out 0.8s both;
+        }
+
+        .links p {
+            margin-bottom: 12px;
+            opacity: 0.8;
+        }
+
+        .links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .links a:hover {
+            color: white;
+            gap: 8px;
+        }
+
+        /* Messages/Alerts */
+        .messages {
+            margin-bottom: 25px;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+
+        .alert {
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fecaca;
+        }
+
+        .alert-success {
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #bbf7d0;
+        }
+
+        .alert-icon {
+            font-size: 1.1rem;
+        }
+
+        /* Terms and Conditions */
+        .terms-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .terms-group input {
+            margin-top: 3px;
+        }
+
+        .terms-group label {
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .terms-link {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .terms-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Particle Effect */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Success Screen */
+        .success-screen {
+            text-align: center;
+            padding: 20px 0;
+            display: none;
+        }
+
+        .success-screen.active {
+            display: block;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            animation: bounce 1s ease-out;
+        }
+
+        .success-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .success-message {
+            opacity: 0.8;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .register-container {
+                margin: 20px;
+                padding: 40px 25px;
+            }
+
+            .logo h1 {
+                font-size: 1.8rem;
+            }
+
+            .form-navigation {
+                flex-direction: column;
+            }
+
+            .progress-steps {
+                margin-bottom: 20px;
+            }
+
+            .step-label {
+                font-size: 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Enhanced Ocean Background -->
+    <div class="ocean-background">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <!-- Floating Bubbles -->
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <!-- Particle Effect -->
+    <div class="particles" id="particles-js"></div>
+
+    <div class="register-container">
+        <div class="logo">
+            <div class="logo-icon">🌊</div>
+            <h1>AGROAI</h1>
+            <p>Create Your Ocean Data Account</p>
+        </div>
+
+        <!-- Demo Messages - Remove in production -->
+        <div class="messages">
+            <!--
+            <div class="alert alert-error">
+                <i class="fas fa-exclamation-circle alert-icon"></i>
+                <span>Passwords do not match. Please try again.</span>
+            </div>
+            <div class="alert alert-success">
+                <i class="fas fa-check-circle alert-icon"></i>
+                <span>Registration successful! Please check your email.</span>
+            </div>
+            -->
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="progress-steps">
+            <div class="progress-bar" id="progressBar"></div>
+            <div class="step active" data-step="1">
+                <div class="step-circle">1</div>
+                <div class="step-label">Account</div>
+            </div>
+            <div class="step" data-step="2">
+                <div class="step-circle">2</div>
+                <div class="step-label">Profile</div>
+            </div>
+            <div class="step" data-step="3">
+                <div class="step-circle">3</div>
+                <div class="step-label">Complete</div>
+            </div>
+        </div>
+
+        <!-- Step 1: Account Information -->
+        <form id="registerForm" method="POST">
+            {% csrf_token %}
+            
+            <!-- Step 1: Account Information -->
+            <div class="form-step active" id="step1">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" id="username" name="username" placeholder="Choose a unique username" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password1">Password</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="password1" name="password1" placeholder="Create a strong password" required>
+                        <button type="button" class="password-toggle" data-target="password1">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="password-strength" id="passwordStrength">
+                        <div class="password-strength-bar"></div>
+                    </div>
+                    <div class="password-requirements" id="passwordRequirements">
+                        <div class="requirement" data-requirement="length">
+                            <i class="fas fa-times"></i>
+                            <span>At least 8 characters</span>
+                        </div>
+                        <div class="requirement" data-requirement="uppercase">
+                            <i class="fas fa-times"></i>
+                            <span>One uppercase letter</span>
+                        </div>
+                        <div class="requirement" data-requirement="number">
+                            <i class="fas fa-times"></i>
+                            <span>One number</span>
+                        </div>
+                        <div class="requirement" data-requirement="special">
+                            <i class="fas fa-times"></i>
+                            <span>One special character</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password2">Confirm Password</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="password2" name="password2" placeholder="Confirm your password" required>
+                        <button type="button" class="password-toggle" data-target="password2">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="button" class="btn" id="nextStep1">
+                    <span class="btn-text">Continue to Profile</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <!-- Step 2: Profile Information -->
+            <div class="form-step" id="step2">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-id-card input-icon"></i>
+                        <input type="text" id="fullName" name="fullName" placeholder="Enter your full name">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="organization">Organization (Optional)</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-building input-icon"></i>
+                        <input type="text" id="organization" name="organization" placeholder="Your organization or institution">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="researchArea">Research Area</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-microscope input-icon"></i>
+                        <select id="researchArea" name="researchArea" style="width: 100%; padding: 15px 15px 15px 45px; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 12px; background: rgba(255, 255, 255, 0.1); color: white; font-size: 1rem; appearance: none;">
+                            <option value="">Select your research area</option>
+                            <option value="marine-biology">Marine Biology</option>
+                            <option value="oceanography">Oceanography</option>
+                            <option value="climate-science">Climate Science</option>
+                            <option value="environmental-science">Environmental Science</option>
+                            <option value="fisheries">Fisheries</option>
+                            <option value="conservation">Conservation</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <i class="fas fa-chevron-down input-icon" style="left: auto; right: 15px;"></i>
+                    </div>
+                </div>
+
+                <div class="terms-group">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">
+                        I agree to the <a href="#" class="terms-link">Terms of Service</a> and <a href="#" class="terms-link">Privacy Policy</a>. I understand that AGROAI will process my data in accordance with these policies.
+                    </label>
+                </div>
+
+                <div class="form-navigation">
+                    <button type="button" class="btn btn-secondary" id="prevStep2">
+                        <i class="fas fa-arrow-left"></i>
+                        <span class="btn-text">Back</span>
+                    </button>
+                    <button type="button" class="btn" id="nextStep2">
+                        <span class="btn-text">Create Account</span>
+                        <i class="fas fa-user-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Step 3: Success Screen -->
+        <div class="success-screen" id="step3">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2 class="success-title">Welcome to AGROAI!</h2>
+            <p class="success-message">
+                Your account has been successfully created. You can now access our ocean data platform and start exploring marine ecosystems with AI-powered tools.
+            </p>
+            <button class="btn" id="continueToDashboard">
+                <span class="btn-text">Continue to Dashboard</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <div class="links">
+            <p>Already have an account? <a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login here</a></p>
+            <p><a href="{% url 'home' %}"><i class="fas fa-home"></i> Back to Home</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Current step tracking
+            let currentStep = 1;
+            const totalSteps = 3;
+            const progressBar = document.getElementById('progressBar');
+            
+            // Update progress bar
+            function updateProgress() {
+                const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+                progressBar.style.width = `${progress}%`;
+                
+                // Update step circles
+                document.querySelectorAll('.step').forEach((step, index) => {
+                    const stepNumber = index + 1;
+                    if (stepNumber < currentStep) {
+                        step.classList.add('completed');
+                        step.classList.remove('active');
+                    } else if (stepNumber === currentStep) {
+                        step.classList.add('active');
+                        step.classList.remove('completed');
+                    } else {
+                        step.classList.remove('active', 'completed');
+                    }
+                });
+            }
+            
+            // Navigation functions
+            function showStep(stepNumber) {
+                document.querySelectorAll('.form-step').forEach(step => {
+                    step.classList.remove('active');
+                });
+                document.getElementById(`step${stepNumber}`).classList.add('active');
+                currentStep = stepNumber;
+                updateProgress();
+            }
+            
+            // Step navigation
+            document.getElementById('nextStep1').addEventListener('click', function() {
+                // Validate step 1
+                const username = document.getElementById('username').value;
+                const email = document.getElementById('email').value;
+                const password1 = document.getElementById('password1').value;
+                const password2 = document.getElementById('password2').value;
+                
+                if (!username || !email || !password1 || !password2) {
+                    alert('Please fill in all fields.');
+                    return;
+                }
+                
+                if (password1 !== password2) {
+                    alert('Passwords do not match.');
+                    return;
+                }
+                
+                if (!isPasswordStrong(password1)) {
+                    alert('Please choose a stronger password.');
+                    return;
+                }
+                
+                showStep(2);
+            });
+            
+            document.getElementById('prevStep2').addEventListener('click', function() {
+                showStep(1);
+            });
+            
+            document.getElementById('nextStep2').addEventListener('click', function() {
+                // Validate step 2
+                const fullName = document.getElementById('fullName').value;
+                const terms = document.getElementById('terms').checked;
+                
+                if (!fullName) {
+                    alert('Please enter your full name.');
+                    return;
+                }
+                
+                if (!terms) {
+                    alert('Please agree to the Terms of Service and Privacy Policy.');
+                    return;
+                }
+                
+                // Show loading state
+                const btn = document.getElementById('nextStep2');
+                btn.classList.add('btn-loading');
+                
+                // Simulate API call - replace with actual registration logic
+                setTimeout(() => {
+                    btn.classList.remove('btn-loading');
+                    showStep(3);
+                }, 2000);
+            });
+            
+            document.getElementById('continueToDashboard').addEventListener('click', function() {
+                alert('Redirecting to dashboard...');
+                // In a real app: window.location.href = '/dashboard/';
+            });
+            
+            // Password strength checker
+            function isPasswordStrong(password) {
+                const requirements = {
+                    length: password.length >= 8,
+                    uppercase: /[A-Z]/.test(password),
+                    number: /[0-9]/.test(password),
+                    special: /[!@#$%^&*(),.?":{}|<>]/.test(password)
+                };
+                
+                return Object.values(requirements).every(req => req);
+            }
+            
+            function updatePasswordStrength(password) {
+                const requirements = {
+                    length: password.length >= 8,
+                    uppercase: /[A-Z]/.test(password),
+                    number: /[0-9]/.test(password),
+                    special: /[!@#$%^&*(),.?":{}|<>]/.test(password)
+                };
+                
+                const metCount = Object.values(requirements).filter(req => req).length;
+                const strengthBar = document.getElementById('passwordStrength');
+                const requirementsList = document.getElementById('passwordRequirements');
+                
+                // Update strength bar
+                strengthBar.className = 'password-strength';
+                if (metCount <= 1) {
+                    strengthBar.classList.add('weak');
+                } else if (metCount <= 3) {
+                    strengthBar.classList.add('medium');
+                } else {
+                    strengthBar.classList.add('strong');
+                }
+                
+                // Update requirements list
+                Object.keys(requirements).forEach(req => {
+                    const element = requirementsList.querySelector(`[data-requirement="${req}"]`);
+                    if (requirements[req]) {
+                        element.classList.add('met');
+                        element.querySelector('i').className = 'fas fa-check';
+                    } else {
+                        element.classList.remove('met');
+                        element.querySelector('i').className = 'fas fa-times';
+                    }
+                });
+            }
+            
+            // Password strength real-time update
+            document.getElementById('password1').addEventListener('input', function() {
+                updatePasswordStrength(this.value);
+            });
+            
+            // Password toggle functionality
+            document.querySelectorAll('.password-toggle').forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const passwordInput = document.getElementById(targetId);
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+                });
+            });
+            
+            // Terms link
+            document.querySelector('.terms-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Terms of Service and Privacy Policy would be displayed here.');
+            });
+            
+            // Simple particle effect
+            const particlesContainer = document.getElementById('particles-js');
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.width = Math.random() * 4 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.background = 'rgba(255, 255, 255, 0.5)';
+                particle.style.borderRadius = '50%';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * 100 + 'vh';
+                particle.style.animation = `float ${Math.random() * 10 + 10}s infinite ease-in-out`;
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                particlesContainer.appendChild(particle);
+            }
+            
+            // Initialize progress
+            updateProgress();
+        });
+    </script>
+</body>
+</html>

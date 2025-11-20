@@ -1,0 +1,1840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGROAI - AI-Powered Ocean Data Discovery Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5a6fd8;
+            --secondary: #764ba2;
+            --accent: #4fd1c7;
+            --accent-dark: #38b2ac;
+            --accent-light: #81e6d9;
+            --text-light: #ffffff;
+            --text-dark: #2d3748;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --card-bg-solid: rgba(30, 41, 59, 0.8);
+            --card-border: rgba(255, 255, 255, 0.2);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.3);
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            --gradient-accent: linear-gradient(45deg, var(--accent), var(--accent-dark));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gradient);
+            min-height: 100vh;
+            color: var(--text-light);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 1. Enhanced Animated Ocean Background */
+        .ocean-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 12rem;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" fill="%23ffffff22"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" /></svg>');
+            background-size: 50% 100%;
+            animation: wave 15s linear infinite;
+        }
+
+        .wave:nth-child(2) {
+            animation: wave 12s linear infinite;
+            opacity: 0.5;
+            bottom: 2rem;
+        }
+
+        .wave:nth-child(3) {
+            animation: wave 18s linear infinite;
+            opacity: 0.3;
+            bottom: 4rem;
+        }
+
+        .bubbles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: rise 15s infinite ease-in;
+        }
+
+        .bubble:nth-child(1) {
+            width: 40px;
+            height: 40px;
+            left: 10%;
+            animation-duration: 16s;
+        }
+
+        .bubble:nth-child(2) {
+            width: 20px;
+            height: 20px;
+            left: 20%;
+            animation-duration: 12s;
+            animation-delay: 1s;
+        }
+
+        .bubble:nth-child(3) {
+            width: 50px;
+            height: 50px;
+            left: 35%;
+            animation-duration: 18s;
+            animation-delay: 2s;
+        }
+
+        .bubble:nth-child(4) {
+            width: 80px;
+            height: 80px;
+            left: 50%;
+            animation-duration: 22s;
+            animation-delay: 0s;
+        }
+
+        .bubble:nth-child(5) {
+            width: 35px;
+            height: 35px;
+            left: 55%;
+            animation-duration: 16s;
+            animation-delay: 1s;
+        }
+
+        .bubble:nth-child(6) {
+            width: 45px;
+            height: 45px;
+            left: 65%;
+            animation-duration: 19s;
+            animation-delay: 3s;
+        }
+
+        .bubble:nth-child(7) {
+            width: 25px;
+            height: 25px;
+            left: 75%;
+            animation-duration: 14s;
+            animation-delay: 2s;
+        }
+
+        .bubble:nth-child(8) {
+            width: 60px;
+            height: 60px;
+            left: 80%;
+            animation-duration: 17s;
+            animation-delay: 0s;
+        }
+
+        .bubble:nth-child(9) {
+            width: 15px;
+            height: 15px;
+            left: 70%;
+            animation-duration: 20s;
+            animation-delay: 4s;
+        }
+
+        .bubble:nth-child(10) {
+            width: 30px;
+            height: 30px;
+            left: 25%;
+            animation-duration: 15s;
+            animation-delay: 5s;
+        }
+
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(-25%); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @keyframes rise {
+            0% {
+                bottom: -100px;
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(100px);
+            }
+            100% {
+                bottom: 1080px;
+                transform: translateX(-100px);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 6. Enhanced Navigation */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin: -20px -20px 20px -20px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background: rgba(15, 23, 42, 0.9);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+        }
+
+        /* 4. Floating Logo Animation */
+        .logo-icon {
+            font-size: 2.5rem;
+            animation: float 6s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(79, 209, 199, 0.5));
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #fff, var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: var(--accent);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .login-btn {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 25px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .login-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .signup-btn {
+            background: var(--gradient-accent);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .signup-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        /* 2. Advanced Visual Hierarchy */
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            background: linear-gradient(to right, #fff, var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease-out;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        /* Hero Badges */
+        .hero-badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .badge:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Features Section */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            background: linear-gradient(to right, #fff, var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 60px;
+            opacity: 0.8;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        /* 10. Modern Card Design */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 80px 0;
+        }
+
+        .feature-card {
+            background: var(--card-bg-solid);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid var(--card-border);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1s ease-out;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            transition: transform 0.5s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            opacity: 0.8;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .feature-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: gap 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-link:hover {
+            gap: 10px;
+        }
+
+        /* 5. Comprehensive Stats Section */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 100px 0;
+            gap: 30px;
+            background: var(--card-bg-solid);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 60px 40px;
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow);
+        }
+
+        .stat-item {
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+            flex: 1;
+            min-width: 200px;
+            cursor: pointer;
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            margin: 100px 0;
+        }
+
+        .testimonial-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: var(--card-bg-solid);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .testimonial-content {
+            font-style: italic;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .author-info h4 {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* 7. Multiple CTA Options */
+        .cta-section {
+            text-align: center;
+            margin: 100px 0;
+            animation: fadeInUp 1s ease-out 0.4s both;
+            background: var(--card-bg-solid);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 80px 40px;
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(79,209,199,0.1) 0%, transparent 70%);
+            animation: pulse 8s infinite ease-in-out;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .cta-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.8;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            background: var(--gradient-accent);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            font-weight: 600;
+            z-index: 1;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+
+        .secondary-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .secondary-button {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 15px 30px;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .secondary-button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 60px 0 40px;
+            margin-top: 100px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .footer-link:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .social-link:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Particle Effect */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: var(--card-bg-solid);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--accent);
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #fff, var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .modal-text {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Login/Signup Forms */
+        .auth-form {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .auth-form.active {
+            display: block;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: var(--gradient-accent);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        .auth-switch a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .auth-switch a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* 9. Fully Responsive Design */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .auth-buttons {
+                margin-top: 15px;
+            }
+
+            .hero {
+                padding: 60px 20px;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 40px;
+                padding: 40px 20px;
+            }
+
+            .secondary-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .secondary-button {
+                width: 200px;
+                justify-content: center;
+            }
+
+            .testimonial-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(15, 23, 42, 0.95);
+                padding: 20px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .feature-card {
+                padding: 30px 20px;
+            }
+
+            .cta-button {
+                padding: 15px 40px;
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+
+            .auth-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .login-btn, .signup-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 1. Enhanced Animated Ocean Background -->
+    <div class="ocean-background">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <!-- Floating Bubbles -->
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <!-- Particle Effect -->
+    <div class="particles" id="particles-js"></div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <h2 class="modal-title" id="modalTitle">Welcome to AGROAI</h2>
+            <p class="modal-text" id="modalText">Join our ocean data discovery platform to access advanced analytics and research tools.</p>
+            
+            <!-- Login Form -->
+            <div class="auth-form" id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+                <button class="form-submit" id="loginSubmit">Login to AGROAI</button>
+                <div class="auth-switch">
+                    Don't have an account? <a id="switchToSignup">Sign up here</a>
+                </div>
+            </div>
+
+            <!-- Signup Form -->
+            <div class="auth-form" id="signupForm">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" placeholder="Create a password" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupConfirm">Confirm Password</label>
+                    <input type="password" id="signupConfirm" placeholder="Confirm your password" required>
+                </div>
+                <button class="form-submit" id="signupSubmit">Create Account</button>
+                <div class="auth-switch">
+                    Already have an account? <a id="switchToLogin">Login here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 6. Enhanced Navigation -->
+        <header class="header" id="header">
+            <div class="logo" id="logo">
+                <div class="logo-icon">🌊</div>
+                <div class="logo-text">AGROAI</div>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav class="nav-links" id="navLinks">
+                <a href="#" class="nav-link" data-section="home">Home</a>
+                <a href="#features" class="nav-link" data-section="features">Features</a>
+                <a href="#stats" class="nav-link" data-section="stats">Statistics</a>
+                <a href="#testimonials" class="nav-link" data-section="testimonials">Testimonials</a>
+                <a href="#cta" class="nav-link" data-section="cta">Get Started</a>
+                <div class="auth-buttons">
+                    <button class="login-btn" id="headerLogin">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Login
+                    </button>
+                    <button class="signup-btn" id="headerSignup">
+                        <i class="fas fa-user-plus"></i>
+                        Sign Up Free
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <h1>Discover Ocean Data with AI Intelligence</h1>
+            <p>Advanced marine ecosystem analysis, real-time ocean monitoring, and predictive insights powered by cutting-edge artificial intelligence.</p>
+            
+            <!-- Hero Badges -->
+            <div class="hero-badges">
+                <div class="badge" data-badge="security">
+                    <i class="fas fa-shield-alt"></i>
+                    Secure & Private
+                </div>
+                <div class="badge" data-badge="realtime">
+                    <i class="fas fa-bolt"></i>
+                    Real-time Processing
+                </div>
+                <div class="badge" data-badge="analytics">
+                    <i class="fas fa-chart-line"></i>
+                    Predictive Analytics
+                </div>
+                <div class="badge" data-badge="coverage">
+                    <i class="fas fa-globe"></i>
+                    Global Coverage
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features">
+            <h2 class="section-title">Powerful Features</h2>
+            <p class="section-subtitle">Everything you need for comprehensive ocean data analysis and research</p>
+            
+            <div class="features">
+                <div class="feature-card" data-feature="ai-analysis">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI-Powered Analysis</h3>
+                    <p>Advanced machine learning algorithms process ocean data to provide accurate predictions and insights for marine research and conservation.</p>
+                    <div class="feature-link" data-feature="ai-analysis">
+                        Learn more <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+                <div class="feature-card" data-feature="visualizations">
+                    <div class="feature-icon">📊</div>
+                    <h3>Interactive Visualizations</h3>
+                    <p>Create stunning, interactive charts and 3D maps to visualize complex ocean data and identify patterns with ease.</p>
+                    <div class="feature-link" data-feature="visualizations">
+                        Learn more <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+                <div class="feature-card" data-feature="research-tools">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Advanced Research Tools</h3>
+                    <p>Comprehensive suite of tools for marine biologists, oceanographers, and environmental scientists.</p>
+                    <div class="feature-link" data-feature="research-tools">
+                        Learn more <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+                <div class="feature-card" data-feature="monitoring">
+                    <div class="feature-icon">🌡️</div>
+                    <h3>Real-time Monitoring</h3>
+                    <p>Monitor ocean parameters in real-time with alerts for significant changes or anomalies in the marine environment.</p>
+                    <div class="feature-link" data-feature="monitoring">
+                        Learn more <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+                <div class="feature-card" data-feature="modeling">
+                    <div class="feature-icon">📈</div>
+                    <h3>Predictive Modeling</h3>
+                    <p>Forecast ocean conditions, ecosystem changes, and climate impacts using advanced predictive algorithms.</p>
+                    <div class="feature-link" data-feature="modeling">
+                        Learn more <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+                <div class="feature-card" data-feature="collaboration">
+                    <div class="feature-icon">🔬</div>
+                    <h3>Research Collaboration</h3>
+                    <p>Share findings, collaborate with researchers worldwide, and contribute to global ocean conservation efforts.</p>
+                    <div class="feature-link" data-feature="collaboration">
+                        Learn more <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Comprehensive Stats Section -->
+        <section id="stats" class="stats">
+            <div class="stat-item" data-stat="data-points">
+                <div class="stat-number" data-target="50000">0</div>
+                <div class="stat-label">Ocean Data Points</div>
+            </div>
+            <div class="stat-item" data-stat="monitoring">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Real-time Monitoring</div>
+            </div>
+            <div class="stat-item" data-stat="parameters">
+                <div class="stat-number" data-target="15">0</div>
+                <div class="stat-label">Research Parameters</div>
+            </div>
+            <div class="stat-item" data-stat="accuracy">
+                <div class="stat-number" data-target="99">0</div>
+                <div class="stat-label">Accuracy Rate</div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="testimonials">
+            <h2 class="section-title">Trusted by Researchers</h2>
+            <p class="section-subtitle">See what marine scientists and oceanographers are saying about AGROAI</p>
+            
+            <div class="testimonial-cards">
+                <div class="testimonial-card" data-testimonial="maria">
+                    <div class="testimonial-content">
+                        "AGROAI has revolutionized how we analyze ocean temperature data. The predictive models have been incredibly accurate in forecasting coral bleaching events."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MD</div>
+                        <div class="author-info">
+                            <h4>Dr. Maria Rodriguez</h4>
+                            <p>Marine Biologist, Ocean Research Institute</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card" data-testimonial="james">
+                    <div class="testimonial-content">
+                        "The real-time monitoring capabilities have been invaluable for our coastal conservation projects. We can now respond to changes in water quality almost instantly."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JT</div>
+                        <div class="author-info">
+                            <h4>James Thompson</h4>
+                            <p>Environmental Scientist, Coastal Protection Agency</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card" data-testimonial="sarah">
+                    <div class="testimonial-content">
+                        "As an oceanographer, I appreciate the depth of data and the intuitive visualization tools. AGROAI has significantly accelerated our research on ocean currents."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SK</div>
+                        <div class="author-info">
+                            <h4>Abhishek Kumar</h4>
+                            <p>Full stack ,LPU</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Multiple CTA Options -->
+        <section id="cta" class="cta-section">
+            <h2 class="cta-title">Ready to Dive into Ocean Data?</h2>
+            <p class="cta-subtitle">Join thousands of researchers and start exploring marine ecosystems with our powerful AI platform</p>
+            
+            <button class="cta-button" id="mainCta">
+                <i class="fas fa-play-circle"></i>
+                Start Exploring Now
+            </button>
+            
+            <div class="secondary-buttons">
+                <button class="secondary-button" id="signupCta">
+                    <i class="fas fa-user-plus"></i>
+                    Create Free Account
+                </button>
+                <button class="secondary-button" id="demoCta">
+                    <i class="fas fa-calendar-alt"></i>
+                    Schedule Demo
+                </button>
+                <button class="secondary-button" id="docsCta">
+                    <i class="fas fa-book"></i>
+                    View Documentation
+                </button>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="#" class="footer-link" data-footer="home">Home</a>
+                <a href="#features" class="footer-link" data-footer="features">Features</a>
+                <a href="#" class="footer-link" data-footer="pricing">Pricing</a>
+                <a href="#" class="footer-link" data-footer="documentation">Documentation</a>
+                <a href="#" class="footer-link" data-footer="about">About Us</a>
+                <a href="#" class="footer-link" data-footer="contact">Contact</a>
+                <a href="#" class="footer-link" data-footer="privacy">Privacy Policy</a>
+                <a href="#" class="footer-link" data-footer="terms">Terms of Service</a>
+            </div>
+            
+            <div class="social-links">
+                <div class="social-link" data-social="twitter">
+                    <i class="fab fa-twitter"></i>
+                </div>
+                <div class="social-link" data-social="facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </div>
+                <div class="social-link" data-social="linkedin">
+                    <i class="fab fa-linkedin-in"></i>
+                </div>
+                <div class="social-link" data-social="github">
+                    <i class="fab fa-github"></i>
+                </div>
+                <div class="social-link" data-social="youtube">
+                    <i class="fab fa-youtube"></i>
+                </div>
+            </div>
+            
+            <p class="copyright">&copy; 2024 AGROAI - Advanced Ocean Data Discovery Platform. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Feature data for modal
+        const featureData = {
+            'ai-analysis': {
+                title: 'AI-Powered Analysis',
+                description: 'Our advanced machine learning algorithms process vast amounts of ocean data to provide accurate predictions and insights. The system uses neural networks trained on decades of marine research data to identify patterns and trends that would be impossible for humans to detect manually.'
+            },
+            'visualizations': {
+                title: 'Interactive Visualizations',
+                description: 'Create stunning, interactive charts and 3D maps to visualize complex ocean data. Our visualization tools allow you to explore data from multiple angles, apply filters, and create custom dashboards for your specific research needs.'
+            },
+            'research-tools': {
+                title: 'Advanced Research Tools',
+                description: 'Comprehensive suite of tools designed specifically for marine biologists, oceanographers, and environmental scientists. Includes data analysis pipelines, statistical modeling, and collaborative research features.'
+            },
+            'monitoring': {
+                title: 'Real-time Monitoring',
+                description: 'Monitor ocean parameters in real-time with automated alerts for significant changes or anomalies. Our system integrates with satellite data, buoy networks, and underwater sensors to provide comprehensive monitoring capabilities.'
+            },
+            'modeling': {
+                title: 'Predictive Modeling',
+                description: 'Forecast ocean conditions, ecosystem changes, and climate impacts using advanced predictive algorithms. Our models incorporate multiple data sources and environmental factors to provide accurate short-term and long-term predictions.'
+            },
+            'collaboration': {
+                title: 'Research Collaboration',
+                description: 'Share findings, collaborate with researchers worldwide, and contribute to global ocean conservation efforts. Our platform includes project management tools, data sharing capabilities, and publication support.'
+            }
+        };
+
+        // Testimonial data
+        const testimonialData = {
+            'maria': {
+                name: 'Dr. Maria Rodriguez',
+                role: 'Marine Biologist, Ocean Research Institute',
+                fullQuote: '"AGROAI has revolutionized how we analyze ocean temperature data. The predictive models have been incredibly accurate in forecasting coral bleaching events, allowing us to take preventive measures months in advance. The platform\'s intuitive interface makes complex data analysis accessible to our entire research team."'
+            },
+            'james': {
+                name: 'James Thompson',
+                role: 'Environmental Scientist, Coastal Protection Agency',
+                fullQuote: '"The real-time monitoring capabilities have been invaluable for our coastal conservation projects. We can now respond to changes in water quality almost instantly, which has significantly improved our ability to protect vulnerable marine ecosystems. The alert system has prevented several potential environmental disasters."'
+            },
+            'sarah': {
+                name: 'Abhishek Kumar',
+                role: 'Full stack ,LPU',
+                fullQuote: '"As an oceanographer, I appreciate the depth of data and the intuitive visualization tools. AGROAI has significantly accelerated our research on ocean currents and their impact on global climate patterns. The collaborative features have enabled international research partnerships that were previously difficult to coordinate."'
+            }
+        };
+
+        // Badge data
+        const badgeData = {
+            'security': {
+                title: 'Security & Privacy',
+                description: 'All data is encrypted end-to-end with military-grade security protocols. We comply with international data protection regulations and never share your research data without explicit permission.'
+            },
+            'realtime': {
+                title: 'Real-time Processing',
+                description: 'Our distributed computing infrastructure processes data in real-time, with updates every 15 minutes from global monitoring stations. This ensures you always have access to the most current ocean data available.'
+            },
+            'analytics': {
+                title: 'Predictive Analytics',
+                description: 'Leverage our advanced AI models to forecast ocean conditions with 94% accuracy. Our predictive analytics help researchers anticipate changes in marine ecosystems weeks or even months in advance.'
+            },
+            'coverage': {
+                title: 'Global Coverage',
+                description: 'Access data from over 5,000 monitoring stations worldwide, including remote Arctic and Antarctic regions. Our satellite integration provides comprehensive global ocean coverage.'
+            }
+        };
+
+        // 8. Scroll Animations and Interactive Elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinks = document.getElementById('navLinks');
+            
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                });
+            }
+
+            // Header scroll effect
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Modal functionality
+            const modal = document.getElementById('modal');
+            const modalClose = document.getElementById('modalClose');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalText = document.getElementById('modalText');
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const switchToSignup = document.getElementById('switchToSignup');
+            const switchToLogin = document.getElementById('switchToLogin');
+
+            function openModal(title, text, showLogin = true) {
+                modalTitle.textContent = title;
+                modalText.textContent = text;
+                
+                if (showLogin) {
+                    loginForm.classList.add('active');
+                    signupForm.classList.remove('active');
+                } else {
+                    loginForm.classList.remove('active');
+                    signupForm.classList.add('active');
+                }
+                
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+
+            modalClose.addEventListener('click', closeModal);
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Login/Signup button functionality
+            document.getElementById('headerLogin').addEventListener('click', function() {
+                openModal('Login to AGROAI', 'Enter your credentials to access the ocean data platform', true);
+            });
+
+            document.getElementById('headerSignup').addEventListener('click', function() {
+                openModal('Join AGROAI', 'Create your account to start exploring ocean data', false);
+            });
+
+            document.getElementById('signupCta').addEventListener('click', function() {
+                openModal('Join AGROAI', 'Create your account to start exploring ocean data', false);
+            });
+
+            // Form switching
+            switchToSignup.addEventListener('click', function() {
+                loginForm.classList.remove('active');
+                signupForm.classList.add('active');
+                modalTitle.textContent = 'Join AGROAI';
+                modalText.textContent = 'Create your account to start exploring ocean data';
+            });
+
+            switchToLogin.addEventListener('click', function() {
+                signupForm.classList.remove('active');
+                loginForm.classList.add('active');
+                modalTitle.textContent = 'Login to AGROAI';
+                modalText.textContent = 'Enter your credentials to access the ocean data platform';
+            });
+
+            // Form submissions
+            document.getElementById('loginSubmit').addEventListener('click', function() {
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                if (email && password) {
+                    alert('Login successful! Welcome to AGROAI.');
+                    closeModal();
+                    // In a real app, you would submit the form to your backend
+                } else {
+                    alert('Please fill in all fields.');
+                }
+            });
+
+            document.getElementById('signupSubmit').addEventListener('click', function() {
+                const name = document.getElementById('signupName').value;
+                const email = document.getElementById('signupEmail').value;
+                const password = document.getElementById('signupPassword').value;
+                const confirm = document.getElementById('signupConfirm').value;
+                
+                if (name && email && password && confirm) {
+                    if (password === confirm) {
+                        alert('Account created successfully! Welcome to AGROAI.');
+                        closeModal();
+                        // In a real app, you would submit the form to your backend
+                    } else {
+                        alert('Passwords do not match.');
+                    }
+                } else {
+                    alert('Please fill in all fields.');
+                }
+            });
+
+            // Feature card clicks
+            document.querySelectorAll('.feature-card, .feature-link').forEach(element => {
+                element.addEventListener('click', function() {
+                    const featureId = this.getAttribute('data-feature');
+                    if (featureData[featureId]) {
+                        openModal(
+                            featureData[featureId].title,
+                            featureData[featureId].description,
+                            false
+                        );
+                    }
+                });
+            });
+
+            // Testimonial card clicks
+            document.querySelectorAll('.testimonial-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const testimonialId = this.getAttribute('data-testimonial');
+                    if (testimonialData[testimonialId]) {
+                        openModal(
+                            testimonialData[testimonialId].name,
+                            testimonialData[testimonialId].fullQuote,
+                            false
+                        );
+                    }
+                });
+            });
+
+            // Badge clicks
+            document.querySelectorAll('.badge').forEach(badge => {
+                badge.addEventListener('click', function() {
+                    const badgeId = this.getAttribute('data-badge');
+                    if (badgeData[badgeId]) {
+                        openModal(
+                            badgeData[badgeId].title,
+                            badgeData[badgeId].description,
+                            false
+                        );
+                    }
+                });
+            });
+
+            // Stat item clicks
+            document.querySelectorAll('.stat-item').forEach(stat => {
+                stat.addEventListener('click', function() {
+                    const statId = this.getAttribute('data-stat');
+                    let title, description;
+                    
+                    switch(statId) {
+                        case 'data-points':
+                            title = 'Ocean Data Points';
+                            description = 'We process over 50,000 data points daily from various sources including satellites, buoys, research vessels, and underwater sensors. This comprehensive data collection enables detailed analysis of ocean health and trends.';
+                            break;
+                        case 'monitoring':
+                            title = '24/7 Real-time Monitoring';
+                            description = 'Our system operates continuously, monitoring ocean parameters around the clock. This ensures timely detection of anomalies and provides researchers with up-to-the-minute data for critical decision-making.';
+                            break;
+                        case 'parameters':
+                            title = 'Research Parameters';
+                            description = 'Track 15+ essential ocean parameters including temperature, salinity, pH, dissolved oxygen, chlorophyll levels, and current patterns. Our comprehensive monitoring covers all critical aspects of marine ecosystem health.';
+                            break;
+                        case 'accuracy':
+                            title = 'Accuracy Rate';
+                            description = 'Our AI models achieve 99% accuracy in predicting ocean conditions and ecosystem changes. This high reliability makes AGROAI a trusted tool for scientific research and environmental monitoring.';
+                            break;
+                        default:
+                            title = 'Statistics';
+                            description = 'Detailed information about our platform statistics and capabilities.';
+                    }
+                    
+                    openModal(title, description, false);
+                });
+            });
+
+            // CTA button clicks
+            document.getElementById('mainCta').addEventListener('click', function() {
+                openModal(
+                    'Start Your Ocean Data Journey',
+                    'Get immediate access to our comprehensive ocean data platform. Explore real-time data, advanced analytics, and collaborative research tools designed for marine scientists and researchers.',
+                    false
+                );
+            });
+
+            document.getElementById('demoCta').addEventListener('click', function() {
+                openModal(
+                    'Schedule a Demo',
+                    'Book a personalized demo with our team to see how AGROAI can transform your ocean research. We\'ll show you advanced features and help you get the most out of our platform.',
+                    false
+                );
+            });
+
+            document.getElementById('docsCta').addEventListener('click', function() {
+                openModal(
+                    'Documentation & Resources',
+                    'Access our comprehensive documentation, tutorials, and research papers. Learn how to use AGROAI effectively for your specific research needs.',
+                    false
+                );
+            });
+
+            // Logo click
+            document.getElementById('logo').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Social link clicks
+            document.querySelectorAll('.social-link').forEach(link => {
+                link.addEventListener('click', function() {
+                    const platform = this.getAttribute('data-social');
+                    openModal(
+                        `Follow Us on ${platform.charAt(0).toUpperCase() + platform.slice(1)}`,
+                        `Connect with us on ${platform} to stay updated with the latest ocean research news, platform updates, and community events.`,
+                        false
+                    );
+                });
+            });
+
+            // Footer link clicks
+            document.querySelectorAll('.footer-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.getAttribute('data-footer');
+                    openModal(
+                        `${section.charAt(0).toUpperCase() + section.slice(1)}`,
+                        `This would navigate to the ${section} section. In a real application, this would load the appropriate content.`,
+                        false
+                    );
+                });
+            });
+
+            // Feature card animation on scroll
+            const featureCards = document.querySelectorAll('.feature-card');
+            const statsItems = document.querySelectorAll('.stat-item');
+            const testimonialCards = document.querySelectorAll('.testimonial-card');
+            
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            featureCards.forEach(card => {
+                observer.observe(card);
+            });
+            
+            statsItems.forEach(stat => {
+                observer.observe(stat);
+            });
+            
+            testimonialCards.forEach(card => {
+                observer.observe(card);
+            });
+            
+            // Animated counter for stats
+            const statNumbers = document.querySelectorAll('.stat-number[data-target]');
+            const options = {
+                threshold: 0.5,
+                rootMargin: '0px 0px -100px 0px'
+            };
+            
+            const counterObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = +entry.target.getAttribute('data-target');
+                        animateCounter(entry.target, target);
+                        counterObserver.unobserve(entry.target);
+                    }
+                });
+            }, options);
+            
+            statNumbers.forEach(stat => {
+                counterObserver.observe(stat);
+            });
+            
+            function animateCounter(element, target) {
+                let current = 0;
+                const increment = target / 100;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        element.textContent = target + (target === 99 ? '%' : '+');
+                        clearInterval(timer);
+                    } else {
+                        element.textContent = Math.floor(current) + (target === 99 ? '%' : '+');
+                    }
+                }, 20);
+            }
+            
+            // Add floating animation to logo
+            const logo = document.querySelector('.logo-icon');
+            setInterval(() => {
+                logo.style.animation = 'none';
+                setTimeout(() => {
+                    logo.style.animation = 'float 6s ease-in-out infinite';
+                }, 10);
+            }, 6000);
+
+            // Simple particle effect
+            const particlesContainer = document.getElementById('particles-js');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.width = Math.random() * 5 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.background = 'rgba(255, 255, 255, 0.5)';
+                particle.style.borderRadius = '50%';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * 100 + 'vh';
+                particle.style.animation = `float ${Math.random() * 10 + 10}s infinite ease-in-out`;
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                particlesContainer.appendChild(particle);
+            }
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        if (navLinks.classList.contains('active')) {
+                            navLinks.classList.remove('active');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
